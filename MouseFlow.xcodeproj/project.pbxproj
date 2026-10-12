@@ -1,0 +1,358 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B11D00001234567890ABCDEF /* MouseFlowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00001234567890ABCDEF /* MouseFlowApp.swift */; };
+		B11D00011234567890ABCDEF /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00011234567890ABCDEF /* AppState.swift */; };
+		B11D00021234567890ABCDEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00021234567890ABCDEF /* ContentView.swift */; };
+		B11D00031234567890ABCDEF /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00031234567890ABCDEF /* SettingsView.swift */; };
+		B11D00051234567890ABCDEF /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00051234567890ABCDEF /* PermissionManager.swift */; };
+		B11D00211234567890ABCDEF /* SystemActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00211234567890ABCDEF /* SystemActions.swift */; };
+		B11D004C1234567890ABCDEF /* ButtonTargetPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */; };
+		B11D004B1234567890ABCDEF /* PointerSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004B1234567890ABCDEF /* PointerSpeed.swift */; };
+		B11D004A1234567890ABCDEF /* GlobalEventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004A1234567890ABCDEF /* GlobalEventTap.swift */; };
+		B11D00491234567890ABCDEF /* ButtonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00491234567890ABCDEF /* ButtonActions.swift */; };
+		B11D00481234567890ABCDEF /* KeySynthesis.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00481234567890ABCDEF /* KeySynthesis.swift */; };
+		B11D00471234567890ABCDEF /* GestureEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00471234567890ABCDEF /* GestureEvent.swift */; };
+		B11D00461234567890ABCDEF /* SmoothScrollEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00461234567890ABCDEF /* SmoothScrollEngine.swift */; };
+		B11D00451234567890ABCDEF /* ScrollPipeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00451234567890ABCDEF /* ScrollPipeline.swift */; };
+		B11D00441234567890ABCDEF /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00441234567890ABCDEF /* Devices.swift */; };
+		B11D00431234567890ABCDEF /* ScrollWheelEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00431234567890ABCDEF /* ScrollWheelEventView.swift */; };
+		B11D00421234567890ABCDEF /* EventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00421234567890ABCDEF /* EventTap.swift */; };
+		B11D00411234567890ABCDEF /* PrivateSPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00411234567890ABCDEF /* PrivateSPI.swift */; };
+		B11D00401234567890ABCDEF /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00401234567890ABCDEF /* DebugLog.swift */; };
+		B11D00221234567890ABCDEF /* MouseButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00221234567890ABCDEF /* MouseButtons.swift */; };
+		B11D00201234567890ABCDEF /* ScrollModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00201234567890ABCDEF /* ScrollModifiers.swift */; };
+		B11D00061234567890ABCDEF /* SettingsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00061234567890ABCDEF /* SettingsWindowController.swift */; };
+		B11D00071234567890ABCDEF /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00071234567890ABCDEF /* LoginItemManager.swift */; };
+		B11D00301234567890ABCDEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F11E00301234567890ABCDEF /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F11E00AA1234567890ABCDEF /* MouseFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MouseFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F11E00991234567890ABCDEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F11E00001234567890ABCDEF /* MouseFlowApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseFlowApp.swift; sourceTree = "<group>"; };
+		F11E00011234567890ABCDEF /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		F11E00021234567890ABCDEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F11E00031234567890ABCDEF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		F11E00051234567890ABCDEF /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		F11E00211234567890ABCDEF /* SystemActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemActions.swift; sourceTree = "<group>"; };
+		F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTargetPrompts.swift; sourceTree = "<group>"; };
+		F11E004B1234567890ABCDEF /* PointerSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerSpeed.swift; sourceTree = "<group>"; };
+		F11E004A1234567890ABCDEF /* GlobalEventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEventTap.swift; sourceTree = "<group>"; };
+		F11E00491234567890ABCDEF /* ButtonActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonActions.swift; sourceTree = "<group>"; };
+		F11E00481234567890ABCDEF /* KeySynthesis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySynthesis.swift; sourceTree = "<group>"; };
+		F11E00471234567890ABCDEF /* GestureEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureEvent.swift; sourceTree = "<group>"; };
+		F11E00461234567890ABCDEF /* SmoothScrollEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmoothScrollEngine.swift; sourceTree = "<group>"; };
+		F11E00451234567890ABCDEF /* ScrollPipeline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollPipeline.swift; sourceTree = "<group>"; };
+		F11E00441234567890ABCDEF /* Devices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Devices.swift; sourceTree = "<group>"; };
+		F11E00431234567890ABCDEF /* ScrollWheelEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollWheelEventView.swift; sourceTree = "<group>"; };
+		F11E00421234567890ABCDEF /* EventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTap.swift; sourceTree = "<group>"; };
+		F11E00411234567890ABCDEF /* PrivateSPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateSPI.swift; sourceTree = "<group>"; };
+		F11E00401234567890ABCDEF /* DebugLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugLog.swift; sourceTree = "<group>"; };
+		F11E00221234567890ABCDEF /* MouseButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseButtons.swift; sourceTree = "<group>"; };
+		F11E00201234567890ABCDEF /* ScrollModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollModifiers.swift; sourceTree = "<group>"; };
+		F11E00061234567890ABCDEF /* SettingsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowController.swift; sourceTree = "<group>"; };
+		F11E00071234567890ABCDEF /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
+		F11E00301234567890ABCDEF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F11E00B21234567890ABCDEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F11E00E11234567890ABCDEF = {
+			isa = PBXGroup;
+			children = (
+				F11E00E21234567890ABCDEF /* MouseFlow */,
+				F11E00E31234567890ABCDEF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F11E00E21234567890ABCDEF /* MouseFlow */ = {
+			isa = PBXGroup;
+			children = (
+				F11E00001234567890ABCDEF /* MouseFlowApp.swift */,
+				F11E00011234567890ABCDEF /* AppState.swift */,
+				F11E00021234567890ABCDEF /* ContentView.swift */,
+				F11E00031234567890ABCDEF /* SettingsView.swift */,
+				F11E00051234567890ABCDEF /* PermissionManager.swift */,
+				F11E00211234567890ABCDEF /* SystemActions.swift */,
+				F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */,
+				F11E004B1234567890ABCDEF /* PointerSpeed.swift */,
+				F11E004A1234567890ABCDEF /* GlobalEventTap.swift */,
+				F11E00491234567890ABCDEF /* ButtonActions.swift */,
+				F11E00481234567890ABCDEF /* KeySynthesis.swift */,
+				F11E00471234567890ABCDEF /* GestureEvent.swift */,
+				F11E00461234567890ABCDEF /* SmoothScrollEngine.swift */,
+				F11E00451234567890ABCDEF /* ScrollPipeline.swift */,
+				F11E00441234567890ABCDEF /* Devices.swift */,
+				F11E00431234567890ABCDEF /* ScrollWheelEventView.swift */,
+				F11E00421234567890ABCDEF /* EventTap.swift */,
+				F11E00411234567890ABCDEF /* PrivateSPI.swift */,
+				F11E00401234567890ABCDEF /* DebugLog.swift */,
+				F11E00221234567890ABCDEF /* MouseButtons.swift */,
+				F11E00201234567890ABCDEF /* ScrollModifiers.swift */,
+				F11E00061234567890ABCDEF /* SettingsWindowController.swift */,
+				F11E00071234567890ABCDEF /* LoginItemManager.swift */,
+				F11E00301234567890ABCDEF /* Assets.xcassets */,
+				F11E00991234567890ABCDEF /* Info.plist */,
+			);
+			path = MouseFlow;
+			sourceTree = "<group>";
+		};
+		F11E00E31234567890ABCDEF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F11E00AA1234567890ABCDEF /* MouseFlow.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F11E00C11234567890ABCDEF /* MouseFlow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F11E00F21234567890ABCDEF /* Build configuration list for PBXNativeTarget "MouseFlow" */;
+			buildPhases = (
+				F11E00B11234567890ABCDEF /* Sources */,
+				F11E00B21234567890ABCDEF /* Frameworks */,
+				F11E00B31234567890ABCDEF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MouseFlow;
+			productName = MouseFlow;
+			productReference = F11E00AA1234567890ABCDEF /* MouseFlow.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F11E00D11234567890ABCDEF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					F11E00C11234567890ABCDEF = {
+						CreatedOnToolsVersion = 15.0;
+						DevelopmentTeam = N584CTY83S;
+					};
+				};
+			};
+			buildConfigurationList = F11E00F11234567890ABCDEF /* Build configuration list for PBXProject "MouseFlow" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F11E00E11234567890ABCDEF;
+			productRefGroup = F11E00E31234567890ABCDEF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F11E00C11234567890ABCDEF /* MouseFlow */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F11E00B31234567890ABCDEF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B11D00301234567890ABCDEF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F11E00B11234567890ABCDEF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B11D00001234567890ABCDEF /* MouseFlowApp.swift in Sources */,
+				B11D00011234567890ABCDEF /* AppState.swift in Sources */,
+				B11D00021234567890ABCDEF /* ContentView.swift in Sources */,
+				B11D00031234567890ABCDEF /* SettingsView.swift in Sources */,
+				B11D00051234567890ABCDEF /* PermissionManager.swift in Sources */,
+				B11D00211234567890ABCDEF /* SystemActions.swift in Sources */,
+				B11D004C1234567890ABCDEF /* ButtonTargetPrompts.swift in Sources */,
+				B11D004B1234567890ABCDEF /* PointerSpeed.swift in Sources */,
+				B11D004A1234567890ABCDEF /* GlobalEventTap.swift in Sources */,
+				B11D00491234567890ABCDEF /* ButtonActions.swift in Sources */,
+				B11D00481234567890ABCDEF /* KeySynthesis.swift in Sources */,
+				B11D00471234567890ABCDEF /* GestureEvent.swift in Sources */,
+				B11D00461234567890ABCDEF /* SmoothScrollEngine.swift in Sources */,
+				B11D00451234567890ABCDEF /* ScrollPipeline.swift in Sources */,
+				B11D00441234567890ABCDEF /* Devices.swift in Sources */,
+				B11D00431234567890ABCDEF /* ScrollWheelEventView.swift in Sources */,
+				B11D00421234567890ABCDEF /* EventTap.swift in Sources */,
+				B11D00411234567890ABCDEF /* PrivateSPI.swift in Sources */,
+				B11D00401234567890ABCDEF /* DebugLog.swift in Sources */,
+				B11D00221234567890ABCDEF /* MouseButtons.swift in Sources */,
+				B11D00201234567890ABCDEF /* ScrollModifiers.swift in Sources */,
+				B11D00061234567890ABCDEF /* SettingsWindowController.swift in Sources */,
+				B11D00071234567890ABCDEF /* LoginItemManager.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F11E00F31234567890ABCDEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F11E00F41234567890ABCDEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		F11E00F51234567890ABCDEF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				DEVELOPMENT_TEAM = N584CTY83S;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MouseFlow/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krushna.MouseFlow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F11E00F61234567890ABCDEF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				DEVELOPMENT_TEAM = N584CTY83S;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = MouseFlow/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krushna.MouseFlow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F11E00F11234567890ABCDEF /* Build configuration list for PBXProject "MouseFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F11E00F31234567890ABCDEF /* Debug */,
+				F11E00F41234567890ABCDEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F11E00F21234567890ABCDEF /* Build configuration list for PBXNativeTarget "MouseFlow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F11E00F51234567890ABCDEF /* Debug */,
+				F11E00F61234567890ABCDEF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+	};
+	rootObject = F11E00D11234567890ABCDEF /* Project object */;
+}

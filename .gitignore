@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+.swiftpm/
+
+# Release artifacts
+*.dmg
+*.xcarchive
+
+# Third-party reference checkouts (not part of the build)
+MouseReferences/
+
+# Agent skills (installed locally via `npx skills`)
+.agents/
+.claude/skills/
+skills-lock.json
+
+# Local-only files
+CLAUDE.md
+MouseFlow-logo-transparent.png
+mod-error*
