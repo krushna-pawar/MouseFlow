@@ -4,9 +4,11 @@ A macOS menu-bar utility (macOS 13+) for external mice: scroll direction, speed 
 
 ## Install
 
-1. Move `MouseFlow.app` to `/Applications` and open it. It runs in the menu bar, with no Dock icon.
-2. When asked, turn on MouseFlow under **System Settings › Privacy & Security › Accessibility**. MouseFlow starts working as soon as access is on; no relaunch needed.
-3. Optional: turn on **Launch at Login** in MouseFlow's Settings › General.
+1. Download `MouseFlow-<version>.dmg` from the [latest release](../../releases/latest).
+2. Open the DMG and drag `MouseFlow.app` to `Applications`.
+3. Open MouseFlow. MouseFlow isn't notarized by Apple, so macOS blocks it the first time. Go to **System Settings › Privacy & Security**, scroll down to the message about MouseFlow, click **Open Anyway**, then confirm with **Open**. You only need to do this once.
+4. MouseFlow runs in the menu bar, with no Dock icon. When asked, turn on MouseFlow under **System Settings › Privacy & Security › Accessibility**. MouseFlow starts working as soon as access is on; no relaunch needed.
+5. Optional: turn on **Launch at Login** in MouseFlow's Settings › General.
 
 ## Troubleshooting
 
@@ -20,21 +22,23 @@ A macOS menu-bar utility (macOS 13+) for external mice: scroll direction, speed 
 
 ## Build from source
 
-Plain Xcode project with no dependencies.
+Plain Xcode project with no dependencies. The project signs with the maintainer's Apple team, so select your own team under the target's **Signing & Capabilities**, or pass `DEVELOPMENT_TEAM=<your team ID>` to `xcodebuild`.
 
 ```sh
 xcodebuild -project MouseFlow.xcodeproj -scheme MouseFlow -configuration Debug -derivedDataPath build build
 open build/Build/Products/Debug/MouseFlow.app --args --settings
 ```
 
-Debug builds log with a `[MouseFlow]` prefix:
+`scripts/release.sh` builds a Release DMG into `build/release/`.
+
+MouseFlow logs with a `[MouseFlow]` prefix:
 
 ```sh
 log stream --predicate 'eventMessage CONTAINS "[MouseFlow]"' --style compact
 ```
 
-Release builds only log errors and event-tap start and stop.
+Debug builds add detailed traces. Release builds log only errors and lifecycle events, such as the event tap starting, stopping or restarting and pointer settings being restored.
 
 ## License
 
-MIT, see [`LICENSE`](LICENSE). Third-party notices are in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+MIT, see [`LICENSE`](LICENSE). The smooth-scrolling code is licensed under CC BY-NC 4.0, so MouseFlow may not be used for commercial purposes. Third-party notices are in [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

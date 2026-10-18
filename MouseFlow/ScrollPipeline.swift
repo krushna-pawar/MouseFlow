@@ -23,7 +23,7 @@ final class ScrollPipeline {
         let view = ScrollWheelEventView(event)
 
         if config.windowsStyleScrolling {
-            view.negate(vertically: true)
+            view.negateVertical()
         }
         // Horizontal modifier: turn the vertical wheel into sideways scrolling.
         if held.contains(.horizontal), view.deltaYSignum != 0 {
@@ -38,7 +38,7 @@ final class ScrollPipeline {
         // Horizontal speed (and fast scroll) for sideways scrolling, from a tilt wheel or the modifier.
         let horizontalFactor = config.horizontalScrollSpeed * multiplier
         if view.deltaXSignum != 0, view.deltaYSignum == 0, horizontalFactor != 1.0 {
-            view.scale(factorX: horizontalFactor)
+            view.scaleX(by: horizontalFactor)
         }
 
         return Self.applyLinesPerTick(view, lines: config.scrollLines * multiplier)
@@ -80,7 +80,7 @@ private final class PinchZoomHandler {
         defer { lock.unlock() }
 
         if !pinchZoomBegan {
-            GestureEvent(zoomSource: nil, phase: .began, magnification: 0)?.post(tap: .cgSessionEventTap)
+            GestureEvent(phase: .began, magnification: 0)?.post(tap: .cgSessionEventTap)
             pinchZoomBegan = true
         }
 
@@ -88,7 +88,7 @@ private final class PinchZoomHandler {
         let deltaY = view.deltaYPt != 0
             ? view.deltaYPt
             : Double(view.deltaYSignum != 0 ? view.deltaYSignum : view.deltaY) * 10.0
-        GestureEvent(zoomSource: nil, phase: .changed, magnification: deltaY * 0.005)?.post(tap: .cgSessionEventTap)
+        GestureEvent(phase: .changed, magnification: deltaY * 0.005)?.post(tap: .cgSessionEventTap)
 
         schedulePinchZoomEnd()
     }
@@ -108,7 +108,7 @@ private final class PinchZoomHandler {
         pinchZoomEndTimer = nil
         if pinchZoomBegan {
             pinchZoomBegan = false
-            GestureEvent(zoomSource: nil, phase: .ended, magnification: 0)?.post(tap: .cgSessionEventTap)
+            GestureEvent(phase: .ended, magnification: 0)?.post(tap: .cgSessionEventTap)
         }
     }
 

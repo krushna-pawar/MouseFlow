@@ -254,13 +254,13 @@ final class AppState: ObservableObject {
 
     /// Called once from AppDelegate after launch. Starts the event tap if enabled.
     func startEventTapIfNeeded() {
-        debugLog("startEventTapIfNeeded called, AccessibilityPermission.enabled = %d", AccessibilityPermission.enabled ? 1 : 0)
-        if AccessibilityPermission.enabled {
+        debugLog("startEventTapIfNeeded called, AccessibilityPermission.isGranted = %d", AccessibilityPermission.isGranted ? 1 : 0)
+        if AccessibilityPermission.isGranted {
             syncEventTap()
         } else {
             debugLog("Requesting accessibility prompt and polling...")
             AccessibilityPermission.explainAndPrompt()
-            AccessibilityPermission.pollingUntilEnabled { [weak self] in
+            AccessibilityPermission.pollUntilGranted { [weak self] in
                 NSLog("[MouseFlow] Accessibility permission granted! Syncing event tap...")
                 self?.syncEventTap()
             }

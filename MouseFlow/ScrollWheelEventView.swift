@@ -125,9 +125,9 @@ final class ScrollWheelEventView {
         )
     }
 
-    /// Negate vertical/horizontal deltas.
-    func negate(vertically: Bool = false, horizontally: Bool = false) {
-        transform(matrix: .init([horizontally ? -1 : 1, 0], [0, vertically ? -1 : 1]))
+    /// Negate the vertical delta.
+    func negateVertical() {
+        transform(matrix: .init([1, 0], [0, -1]))
     }
 
     /// Swap the vertical and horizontal deltas (vertical wheel → sideways scrolling).
@@ -135,8 +135,8 @@ final class ScrollWheelEventView {
         transform(matrix: .init([0, 1], [1, 0]))
     }
 
-    /// Scale deltas by factor.
-    func scale(factorX: Double = 1, factorY: Double = 1) {
-        transform(matrix: .init([factorX, 0], [0, factorY]))
+    /// Scale the horizontal delta by factor.
+    func scaleX(by factor: Double) {
+        transform(matrix: .init([factor, 0], [0, 1]))
     }
 }

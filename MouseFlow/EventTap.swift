@@ -2,7 +2,6 @@
 
 import CoreGraphics
 import Foundation
-import os.log
 
 // MARK: - ObservationToken
 
@@ -32,8 +31,6 @@ enum EventTapError: Error {
 }
 
 enum EventTap {
-    private static let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "EventTap")
-
     typealias Callback = (_ proxy: CGEventTapProxy, _ event: CGEvent) -> CGEvent?
 
     private class ContextHolder {
@@ -53,7 +50,7 @@ enum EventTap {
         case .tapDisabledByUserInput:
             return Unmanaged.passUnretained(event)
         case .tapDisabledByTimeout:
-            os_log("EventTap disabled by timeout, re-enabling", log: log, type: .error)
+            NSLog("[MouseFlow] EventTap disabled by timeout, re-enabling")
             if let tap { CGEvent.tapEnable(tap: tap, enable: true) }
             return Unmanaged.passUnretained(event)
         default:
@@ -65,8 +62,6 @@ enum EventTap {
 
     static func observe(
         _ events: [CGEventType],
-        place: CGEventTapPlacement = .headInsertEventTap,
-        at runLoop: RunLoop = .current,
         onInvalidated: (() -> Void)? = nil,
         callback: @escaping Callback
     ) throws -> ObservationToken {
@@ -75,19 +70,19 @@ enum EventTap {
 
         guard let tap = CGEvent.tapCreate(
             tap: .cghidEventTap,
-            place: place,
+            place: .headInsertEventTap,
             options: .defaultTap,
             eventsOfInterest: eventsOfInterest,
             callback: callbackInvoker,
             userInfo: Unmanaged.passUnretained(contextHolder).toOpaque()
         ) else {
-            os_log("Failed to create event tap", log: log, type: .error)
             throw EventTapError.failedToCreate
         }
 
         contextHolder.tap = tap
 
         let runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
+        let runLoop = RunLoop.current
         let cfRunLoop = runLoop.getCFRunLoop()
         CFRunLoopAddSource(cfRunLoop, runLoopSource, .commonModes)
 
@@ -96,12 +91,12 @@ enum EventTap {
             guard CFMachPortIsValid(tap) else {
                 guard !didNotifyInvalidation else { return }
                 didNotifyInvalidation = true
-                os_log("EventTap became invalid", log: log, type: .error)
+                NSLog("[MouseFlow] EventTap became invalid")
                 onInvalidated?()
                 return
             }
             if !CGEvent.tapIsEnabled(tap: tap) {
-                os_log("EventTap found disabled, re-enabling", log: log, type: .error)
+                NSLog("[MouseFlow] EventTap found disabled, re-enabling")
                 CGEvent.tapEnable(tap: tap, enable: true)
             }
         }
@@ -126,13 +121,9 @@ enum EventTap {
 final class EventThread {
     static let shared = EventThread()
 
-    private static let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "EventThread")
-
     private(set) var runLoop: RunLoop?
     private var thread: Thread?
     private let runLoopReady = DispatchSemaphore(value: 0)
-
-    init() {}
 
     var isCurrent: Bool { Thread.current === thread }
 
@@ -146,12 +137,11 @@ final class EventThread {
             self.runLoopReady.signal()
             CFRunLoopRun()
         }
-        thread.name = "com.krushna.MouseFlow.event-thread"
+        thread.name = "\(Bundle.main.bundleIdentifier!).event-thread"
         thread.qualityOfService = QualityOfService.userInteractive
         self.thread = thread
         thread.start()
         runLoopReady.wait()
-        os_log("EventThread started", log: Self.log, type: .info)
     }
 
     func stop() {
@@ -169,7 +159,6 @@ final class EventThread {
         }
         CFRunLoopWakeUp(cfRunLoop)
         done.wait()
-        os_log("EventThread stopped", log: Self.log, type: .info)
     }
 
     func performAndWait<T>(_ block: @escaping () -> T) -> T? {

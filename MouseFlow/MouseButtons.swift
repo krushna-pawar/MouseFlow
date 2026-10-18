@@ -109,10 +109,6 @@ struct ButtonBinding: Equatable {
     var shortcutName: String?
     var customShortcut: KeyShortcut?
 
-    init(action: ButtonAction) {
-        self.action = action
-    }
-
     static func load(for button: MouseButton, from defaults: UserDefaults) -> ButtonBinding {
         let raw = button.rawNumber
         var binding = ButtonBinding(
@@ -140,9 +136,4 @@ struct ButtonBinding: Equatable {
 struct LaunchAppTarget: Codable, Equatable {
     var path: String
     var name: String
-
-    init(path: String, name: String) {
-        self.path = path
-        self.name = name
-    }
 }

@@ -2,7 +2,6 @@
 
 import CoreGraphics
 import Foundation
-import os.log
 
 // MARK: - GlobalEventTap Settings
 
@@ -63,8 +62,6 @@ final class EventTapSettings {
 final class GlobalEventTap {
     static let shared = GlobalEventTap()
 
-    private static let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "GlobalEventTap")
-
     private var observationToken: ObservationToken?
     private let eventThread = EventThread.shared
 
@@ -83,8 +80,6 @@ final class GlobalEventTap {
             scrollPipeline.reset()
         }
     }
-
-    init() {}
 
     // MARK: - Event Callback
 
@@ -193,7 +188,7 @@ final class GlobalEventTap {
             return
         }
 
-        guard AccessibilityPermission.enabled else {
+        guard AccessibilityPermission.isGranted else {
             NSLog("[MouseFlow] GlobalEventTap.start: Accessibility permission not granted")
             return
         }
@@ -223,11 +218,9 @@ final class GlobalEventTap {
         switch observationResult {
         case let .success(token):
             observationToken = token
-            os_log("GlobalEventTap successfully started!", log: Self.log, type: .default)
             NSLog("[MouseFlow] GlobalEventTap successfully started!")
         case let .failure(error):
             eventThread.stop()
-            os_log("Failed to start GlobalEventTap: %{public}@", log: Self.log, type: .error, String(describing: error))
             NSLog("[MouseFlow] Failed to start GlobalEventTap: %@", String(describing: error))
         }
     }
@@ -241,7 +234,7 @@ final class GlobalEventTap {
     }
 
     private func restart() {
-        os_log("Restarting GlobalEventTap", log: Self.log, type: .info)
+        NSLog("[MouseFlow] Restarting GlobalEventTap")
         stop()
         start()
     }

@@ -131,10 +131,10 @@ struct KeyShortcut: Codable, Equatable {
         CGEventFlags(rawValue: modifierFlagsRaw)
     }
 
-    init(keyCode: CGKeyCode, modifierFlags: CGEventFlags, displayString: String? = nil) {
+    init(keyCode: CGKeyCode, modifierFlags: CGEventFlags) {
         self.keyCode = keyCode
         self.modifierFlagsRaw = modifierFlags.rawValue
-        self.displayString = displayString ?? Self.displayString(keyCode: keyCode, modifierFlags: modifierFlags)
+        self.displayString = Self.displayString(keyCode: keyCode, modifierFlags: modifierFlags)
     }
 
     static func displayString(keyCode: CGKeyCode, modifierFlags: CGEventFlags) -> String {

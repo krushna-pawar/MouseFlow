@@ -3,7 +3,6 @@
 
 import Foundation
 import ServiceManagement
-import os.log
 
 final class LoginItemManager: ObservableObject {
     static let shared = LoginItemManager()
@@ -36,7 +35,6 @@ final class LoginItemManager: ObservableObject {
                 }
             }
         } catch {
-            os_log("[MouseFlow] Failed to update launch at login: %{public}@", log: OSLog.default, type: .error, error.localizedDescription)
             NSLog("[MouseFlow] Failed to update launch at login: %@", error.localizedDescription)
         }
 

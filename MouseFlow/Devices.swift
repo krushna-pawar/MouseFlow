@@ -2,7 +2,6 @@
 
 import CoreGraphics
 import Foundation
-import os.log
 
 // MARK: - Device
 
@@ -139,8 +138,6 @@ final class Device {
 final class DeviceRegistry {
     static let shared: DeviceRegistry = DeviceRegistry(onMouseDiscovered: { PointerSpeedController.shared.mouseDiscovered($0) })
 
-    private static let log = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "DeviceRegistry")
-
     private static let appleVendorIDs = Set([0x004C, 0x05AC])
     private static let appleMagicMouseProductIDs = Set([0x0269, 0x030D])
     private static let appleMagicTrackpadProductIDs = Set([0x0265, 0x030E])
@@ -190,10 +187,8 @@ final class DeviceRegistry {
             let service = serviceObj as AnyObject
             guard let rawReg = IOHIDServiceClientGetRegistryID(service),
                   let regID = (rawReg as? UInt64) ?? (rawReg as? NSNumber)?.uint64Value else { continue }
-            let isTouchpad = IOHIDServiceClientConformsTo(service, 0x0D, 0x05) != 0
-            let isMouse = IOHIDServiceClientConformsTo(service, 0x01, 0x02) != 0
-            let isPointer = IOHIDServiceClientConformsTo(service, 0x01, 0x01) != 0
-            guard isTouchpad || isMouse || isPointer else { continue }
+            let (isTouchpad, isMouseOrPointer) = Self.conformance(of: service)
+            guard isTouchpad || isMouseOrPointer else { continue }
 
             devicesByRegistryID[regID] = buildDevice(for: service, registryID: regID)
         }
@@ -244,14 +239,20 @@ final class DeviceRegistry {
         }
     }
 
+    /// Whether the service is a touch pad, and whether it is a mouse or generic pointer.
+    private static func conformance(of service: AnyObject) -> (isTouchpad: Bool, isMouseOrPointer: Bool) {
+        (
+            isTouchpad: IOHIDServiceClientConformsTo(service, 0x0D, 0x05) != 0,
+            isMouseOrPointer: IOHIDServiceClientConformsTo(service, 0x01, 0x02) != 0 || IOHIDServiceClientConformsTo(service, 0x01, 0x01) != 0
+        )
+    }
+
     private func buildDevice(for service: AnyObject, registryID: UInt64) -> Device {
         let productName = (IOHIDServiceClientCopyProperty(service, "Product" as CFString)?.takeRetainedValue() as? String) ?? "Pointing Device"
         let vendorID = (IOHIDServiceClientCopyProperty(service, "VendorID" as CFString)?.takeRetainedValue() as? NSNumber)?.intValue
         let productID = (IOHIDServiceClientCopyProperty(service, "ProductID" as CFString)?.takeRetainedValue() as? NSNumber)?.intValue
 
-        let isTouchPad = IOHIDServiceClientConformsTo(service, 0x0D, 0x05) != 0
-        let isMouse = IOHIDServiceClientConformsTo(service, 0x01, 0x02) != 0
-        let isPointer = IOHIDServiceClientConformsTo(service, 0x01, 0x01) != 0
+        let (isTouchPad, isMouseOrPointer) = Self.conformance(of: service)
 
         let category: Device.Category
         if let vendorID, let productID, Self.appleVendorIDs.contains(vendorID), Self.appleMagicMouseProductIDs.contains(productID) {
@@ -262,14 +263,12 @@ final class DeviceRegistry {
                   Self.appleMagicTrackpadProductIDs.contains(productID) ||
                   (vendorID == 0x05AC && Self.appleBuiltInTrackpadProductIDs.contains(productID)) {
             category = .trackpad
-        } else if isMouse || isPointer {
+        } else if isMouseOrPointer {
             category = .mouse
         } else {
             category = .unknown
         }
 
-        os_log("Discovered device: %{public}@, registryID=%{public}llu, category=%{public}@",
-               log: Self.log, type: .default, productName, registryID, String(describing: category))
         debugLog("Discovered device: %@, registryID=%llu, category=%@", productName, registryID, String(describing: category))
 
         return Device(

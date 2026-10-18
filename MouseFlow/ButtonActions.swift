@@ -41,10 +41,10 @@ private func supportsNavigationSwipe(bundleIdentifier: String?) -> Bool {
     }
 }
 
-private func postMouseButtonAction(mouseButton: CGMouseButton, targetBundleIdentifier: String?) {
-    if supportsNavigationSwipe(bundleIdentifier: targetBundleIdentifier) {
+private func postMouseButtonAction(mouseButton: CGMouseButton) {
+    if supportsNavigationSwipe(bundleIdentifier: NSWorkspace.shared.frontmostApplication?.bundleIdentifier) {
         let direction: IOHIDSwipeMask = (mouseButton == .back) ? .swipeLeft : .swipeRight
-        if let gesture = GestureEvent(navigationSwipeSource: nil, direction: direction) {
+        if let gesture = GestureEvent(direction: direction) {
             gesture.post(tap: .cgSessionEventTap)
             return
         }
@@ -116,10 +116,8 @@ final class ButtonActionExecutor {
             case .appExpose: CoreDockSendNotification("com.apple.expose.front.awake" as CFString, 0)
             case .showDesktop: CoreDockSendNotification("com.apple.showdesktop.awake" as CFString, 0)
             case .launchpad: SystemActions.openLaunchpad()
-            case .back:
-                postMouseButtonAction(mouseButton: .back, targetBundleIdentifier: NSWorkspace.shared.frontmostApplication?.bundleIdentifier)
-            case .forward:
-                postMouseButtonAction(mouseButton: .forward, targetBundleIdentifier: NSWorkspace.shared.frontmostApplication?.bundleIdentifier)
+            case .back: postMouseButtonAction(mouseButton: .back)
+            case .forward: postMouseButtonAction(mouseButton: .forward)
             case .copy: simulateKeyShortcut(keyCode: 0x08, modifierFlags: .maskCommand)
             case .paste: simulateKeyShortcut(keyCode: 0x09, modifierFlags: .maskCommand)
             case .escape: simulateKeyShortcut(keyCode: 0x35, modifierFlags: [])

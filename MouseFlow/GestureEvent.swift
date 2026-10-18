@@ -3,11 +3,12 @@
 import AppKit
 import CoreGraphics
 
-// MARK: - GestureKit Zoom Extensions & GestureEvent
+// MARK: - Zoom & Swipe Gesture Events
 
 extension CGEventField {
     static let gestureHIDType = CGEventField(rawValue: 110)!
     static let gestureZoomValue = CGEventField(rawValue: 113)!
+    static let gestureSwipeValue = CGEventField(rawValue: 115)!
     static let gesturePhase = CGEventField(rawValue: 132)!
 }
 
@@ -19,6 +20,7 @@ enum CGSGesturePhase: UInt8, Sendable {
 
 private enum IOHIDEventType: UInt32 {
     case zoom = 8
+    case swipe = 16
 }
 
 enum IOHIDSwipeMask: UInt32 {
@@ -39,8 +41,8 @@ final class GestureEvent {
         }
     }
 
-    convenience init?(zoomSource: CGEventSource? = nil, phase: CGSGesturePhase, magnification: Double) {
-        guard let event = CGEvent(source: zoomSource) else {
+    convenience init?(phase: CGSGesturePhase, magnification: Double) {
+        guard let event = CGEvent(source: nil) else {
             return nil
         }
 
@@ -53,27 +55,22 @@ final class GestureEvent {
         self.init(cgEvents: [event])
     }
 
-    convenience init?(navigationSwipeSource: CGEventSource? = nil, direction: IOHIDSwipeMask) {
-        guard let swipeBeganEvent = CGEvent(source: navigationSwipeSource),
-              let swipeEndedEvent = CGEvent(source: navigationSwipeSource) else {
+    convenience init?(direction: IOHIDSwipeMask) {
+        guard let swipeBeganEvent = CGEvent(source: nil),
+              let swipeEndedEvent = CGEvent(source: nil) else {
             return nil
         }
 
-        guard let gestureEventType = CGEventType(rawValue: 29),
-              let gestureHIDType = CGEventField(rawValue: 110),
-              let gesturePhase = CGEventField(rawValue: 132),
-              let gestureSwipeValue = CGEventField(rawValue: 115) else {
-            return nil
-        }
+        let gestureEventType = CGEventType(rawValue: UInt32(NSEvent.EventType.gesture.rawValue))!
 
         swipeBeganEvent.type = gestureEventType
-        swipeBeganEvent.setIntegerValueField(gestureHIDType, value: 16)
-        swipeBeganEvent.setIntegerValueField(gesturePhase, value: 1)
-        swipeBeganEvent.setIntegerValueField(gestureSwipeValue, value: Int64(direction.rawValue))
+        swipeBeganEvent.setIntegerValueField(.gestureHIDType, value: Int64(IOHIDEventType.swipe.rawValue))
+        swipeBeganEvent.setIntegerValueField(.gesturePhase, value: Int64(CGSGesturePhase.began.rawValue))
+        swipeBeganEvent.setIntegerValueField(.gestureSwipeValue, value: Int64(direction.rawValue))
 
         swipeEndedEvent.type = gestureEventType
-        swipeEndedEvent.setIntegerValueField(gestureHIDType, value: 16)
-        swipeEndedEvent.setIntegerValueField(gesturePhase, value: 4)
+        swipeEndedEvent.setIntegerValueField(.gestureHIDType, value: Int64(IOHIDEventType.swipe.rawValue))
+        swipeEndedEvent.setIntegerValueField(.gesturePhase, value: Int64(CGSGesturePhase.ended.rawValue))
 
         self.init(cgEvents: [swipeBeganEvent, swipeEndedEvent])
     }

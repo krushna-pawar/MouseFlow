@@ -80,6 +80,13 @@ final class SmoothScrollEngine {
         }
     }
 
+    /// The discrete delta when there is one, else one notch in the direction of the pixel delta.
+    private static func notchCount(discrete: Int64, point: Double) -> Double {
+        if discrete != 0 { return Double(discrete) }
+        if abs(point) > 0.001 { return point > 0 ? 1.0 : -1.0 }
+        return 0.0
+    }
+
     /// Captures a discrete mouse wheel event and feeds its effective delta into the accumulator.
     /// `multiplier` is the fast scroll factor for this event.
     func postScroll(from event: CGEvent, config: TapConfig, multiplier: Double = 1.0) {
@@ -88,23 +95,8 @@ final class SmoothScrollEngine {
         let view = ScrollWheelEventView(event)
 
         // Extract discrete notch count (un-accelerated to prevent exponential velocity buildup on longer scrolls)
-        let notchY: Double
-        if view.deltaY != 0 {
-            notchY = Double(view.deltaY)
-        } else if abs(view.deltaYPt) > 0.001 {
-            notchY = view.deltaYPt > 0 ? 1.0 : -1.0
-        } else {
-            notchY = 0.0
-        }
-
-        let notchX: Double
-        if view.deltaX != 0 {
-            notchX = Double(view.deltaX)
-        } else if abs(view.deltaXPt) > 0.001 {
-            notchX = view.deltaXPt > 0 ? 1.0 : -1.0
-        } else {
-            notchX = 0.0
-        }
+        let notchY = Self.notchCount(discrete: view.deltaY, point: view.deltaYPt)
+        let notchX = Self.notchCount(discrete: view.deltaX, point: view.deltaXPt)
 
         guard notchY != 0.0 || notchX != 0.0 else { return }
 
@@ -141,16 +133,10 @@ final class SmoothScrollEngine {
         delta = (y: scrollDeltaY, x: scrollDeltaX)
 
         // Lead cap: clamp the leading buffer distance to at most 6 notches ahead of current position.
-        // This directly prevents the "lines per scroll increase by a big margin if scrolled longer" bug:
-        // no matter how long or fast the wheel is spun, a massive backlog never piles up, and motion settles
-        // promptly within ~150-200ms when the user stops turning the wheel.
+        // A long or fast spin can't pile up a backlog, so motion settles within ~150-200 ms after the wheel stops.
         let maxLead = step * 6.0 * max(1.0, multiplier)
-        if abs(buffer.y - current.y) > maxLead {
-            buffer.y = current.y + (buffer.y > current.y ? maxLead : -maxLead)
-        }
-        if abs(buffer.x - current.x) > maxLead {
-            buffer.x = current.x + (buffer.x > current.x ? maxLead : -maxLead)
-        }
+        buffer.y = min(max(buffer.y, current.y - maxLead), current.y + maxLead)
+        buffer.x = min(max(buffer.x, current.x - maxLead), current.x + maxLead)
 
         stopScheduled = false
         startDisplayLinkLocked()

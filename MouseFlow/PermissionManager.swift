@@ -10,8 +10,6 @@ enum AccessibilityPermission {
         ] as CFDictionary)
     }
 
-    static var enabled: Bool { isGranted }
-
     static func prompt() {
         AXIsProcessTrustedWithOptions([
             kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true
@@ -52,9 +50,5 @@ enum AccessibilityPermission {
             return
         }
         completion()
-    }
-
-    static func pollingUntilEnabled(completion: @escaping () -> Void) {
-        pollUntilGranted(completion: completion)
     }
 }

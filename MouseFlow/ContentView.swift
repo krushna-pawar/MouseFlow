@@ -4,10 +4,6 @@ import AppKit
 struct ContentView: View {
     @ObservedObject var appState: AppState
 
-    init(appState: AppState) {
-        self.appState = appState
-    }
-
     var body: some View {
         VStack(alignment: .leading, spacing: 3) {
             // Row 1: MouseFlow [switch]

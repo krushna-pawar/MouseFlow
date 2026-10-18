@@ -92,8 +92,8 @@ struct SettingsView: View {
             hasAccessibility = AccessibilityPermission.isGranted
             loginItemManager.refresh()
         }
-        // Picks up the permission being granted or revoked while the window is open.
-        .onReceive(Timer.publish(every: 1, on: .main, in: .common).autoconnect()) { _ in
+        // Picks up the permission being granted or revoked in System Settings once the user switches back.
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             hasAccessibility = AccessibilityPermission.isGranted
         }
     }
@@ -161,7 +161,7 @@ struct SettingsView: View {
             }
 
             Section {
-                LabeledContent("App Version", value: "1.0.0")
+                LabeledContent("App Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Unknown")
             } header: {
                 Text("About")
             } footer: {
@@ -188,37 +188,13 @@ struct SettingsView: View {
     private var pointerSection: some View {
         Group {
             Section {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text("Mouse Sensitivity")
-                            .font(.system(size: 13))
-                        Spacer()
-                        Text(String(format: "%.2f×", appState.pointerSensitivity))
-                            .font(.system(size: 12, weight: .medium, design: .monospaced))
-                            .foregroundColor(.secondary)
-                    }
-
-                    Slider(value: $appState.pointerSensitivity, in: 0.5...2.0, step: 0.05)
-                }
-                .padding(.vertical, 2)
+                valueSlider("Mouse Sensitivity", value: $appState.pointerSensitivity, valueText: String(format: "%.2f×", appState.pointerSensitivity), in: 0.5...2.0, step: 0.05)
             } header: {
                 Text("Mouse Sensitivity")
             }
 
             Section {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text("Sensitivity")
-                            .font(.system(size: 13))
-                        Spacer()
-                        Text(String(format: "%.2f×", appState.precisionSensitivity))
-                            .font(.system(size: 12, weight: .medium, design: .monospaced))
-                            .foregroundColor(.secondary)
-                    }
-
-                    Slider(value: $appState.precisionSensitivity, in: 0.1...1.0, step: 0.05)
-                }
-                .padding(.vertical, 2)
+                valueSlider("Sensitivity", value: $appState.precisionSensitivity, valueText: String(format: "%.2f×", appState.precisionSensitivity), in: 0.1...1.0, step: 0.05)
 
                 scrollModifierRow(.preciseSensitivity, isOn: $appState.preciseSensitivityEnabled, key: $appState.preciseSensitivityKey)
             } header: {
@@ -237,18 +213,8 @@ struct SettingsView: View {
                 Toggle("Reverse Scroll Direction", isOn: $appState.windowsStyleScrolling)
                     .help("Scrolls the mouse wheel the opposite way to macOS natural scrolling, like on Windows. Trackpads aren't affected.")
 
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text("Scroll Speed")
-                        Spacer()
-                        Text(String(format: "%.2f×", appState.scrollSpeed))
-                            .font(.system(size: 12, weight: .medium, design: .monospaced))
-                            .foregroundColor(.secondary)
-                    }
-
-                    Slider(value: $appState.scrollSpeed, in: 0.5...3.0, step: 0.25)
-                }
-                .disabled(!appState.smoothScrolling)
+                valueSlider("Scroll Speed", value: $appState.scrollSpeed, valueText: String(format: "%.2f×", appState.scrollSpeed), in: 0.5...3.0, step: 0.25)
+                    .disabled(!appState.smoothScrolling)
 
                 Toggle("Smooth Scrolling", isOn: $appState.smoothScrolling)
 
@@ -265,17 +231,7 @@ struct SettingsView: View {
             Section {
                 scrollModifierRow(.horizontal, isOn: $appState.horizontalScrollEnabled, key: $appState.horizontalScrollKey)
 
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text("Horizontal Speed")
-                        Spacer()
-                        Text(String(format: "%.2f×", appState.horizontalScrollSpeed))
-                            .font(.system(size: 12, weight: .medium, design: .monospaced))
-                            .foregroundColor(.secondary)
-                    }
-
-                    Slider(value: $appState.horizontalScrollSpeed, in: 0.5...3.0, step: 0.25)
-                }
+                valueSlider("Horizontal Speed", value: $appState.horizontalScrollSpeed, valueText: String(format: "%.2f×", appState.horizontalScrollSpeed), in: 0.5...3.0, step: 0.25)
             } header: {
                 Text("Horizontal Scrolling")
             } footer: {
@@ -284,17 +240,7 @@ struct SettingsView: View {
             }
 
             Section {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Text("Lines per Scroll Tick")
-                        Spacer()
-                        Text("\(Int(appState.scrollLines)) lines")
-                            .font(.system(size: 12, weight: .medium, design: .monospaced))
-                            .foregroundColor(.secondary)
-                    }
-
-                    Slider(value: $appState.scrollLines, in: 1.0...10.0, step: 1.0)
-                }
+                valueSlider("Lines per Scroll Tick", value: $appState.scrollLines, valueText: "\(Int(appState.scrollLines)) lines", in: 1.0...10.0, step: 1.0)
 
                 // "None" in the picker is the Zoom switch being off.
                 Picker("Zoom Modifier Key", selection: Binding(
@@ -447,6 +393,23 @@ struct SettingsView: View {
         .padding(.leading, 8)
     }
 
+    /// A labeled slider with its value on the right.
+    private func valueSlider(_ title: String, value: Binding<Double>, valueText: String, in range: ClosedRange<Double>, step: Double) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Text(title)
+                    .font(.system(size: 13))
+                Spacer()
+                Text(valueText)
+                    .font(.system(size: 12, weight: .medium, design: .monospaced))
+                    .foregroundColor(.secondary)
+            }
+
+            Slider(value: value, in: range, step: step)
+        }
+        .padding(.vertical, 2)
+    }
+
     /// A scroll modifier feature: name, conflict badge, key picker and on/off switch.
     private func scrollModifierRow(_ feature: ScrollModifierFeature, isOn: Binding<Bool>, key: Binding<String>) -> some View {
         let blockedBy = appState.scrollModifierConflicts[feature]
@@ -576,21 +539,12 @@ struct CustomShortcutRecorder: View {
 
         if observationToken == nil {
             localMonitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown]) { nsEvent in
-                let keyCode = CGKeyCode(nsEvent.keyCode)
                 var flags = CGEventFlags()
                 if nsEvent.modifierFlags.contains(.command) { flags.insert(.maskCommand) }
                 if nsEvent.modifierFlags.contains(.shift) { flags.insert(.maskShift) }
                 if nsEvent.modifierFlags.contains(.option) { flags.insert(.maskAlternate) }
                 if nsEvent.modifierFlags.contains(.control) { flags.insert(.maskControl) }
-
-                if keyCode == 0x35 && flags.isEmpty {
-                    stopRecording()
-                    return nil
-                }
-
-                let shortcut = KeyShortcut(keyCode: keyCode, modifierFlags: flags)
-                onRecord(shortcut)
-                stopRecording()
+                handleKeyDown(keyCode: CGKeyCode(nsEvent.keyCode), flags: flags)
                 return nil
             }
         }
@@ -606,35 +560,26 @@ struct CustomShortcutRecorder: View {
         }
     }
 
+    /// Modifier changes pass through, so ⌘⌥⌃⇧ keep working in other apps while recording.
     private func eventReceived(_ event: CGEvent) -> CGEvent? {
-        switch event.type {
-        case .flagsChanged:
-            // Let modifier changes through so ⌘⌥⌃⇧ keep working in other apps while recording.
-            return event
-
-        case .keyDown:
-            let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
-            let flags = event.flags.intersection([.maskCommand, .maskShift, .maskAlternate, .maskControl])
-
-            if keyCode == 0x35 && flags.isEmpty {
-                DispatchQueue.main.async {
-                    self.stopRecording()
-                }
-                return nil
-            }
-
-            let shortcut = KeyShortcut(keyCode: keyCode, modifierFlags: flags)
-            DispatchQueue.main.async {
-                self.onRecord(shortcut)
-                self.stopRecording()
-            }
-            return nil
-
-        default:
-            break
+        guard event.type == .keyDown else { return event }
+        let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
+        let flags = event.flags
+        DispatchQueue.main.async {
+            self.handleKeyDown(keyCode: keyCode, flags: flags)
         }
-
         return nil
+    }
+
+    /// Records the key with its modifiers, or cancels when Escape is pressed with none.
+    private func handleKeyDown(keyCode: CGKeyCode, flags: CGEventFlags) {
+        let modifiers = flags.intersection([.maskCommand, .maskShift, .maskAlternate, .maskControl])
+        if keyCode == 0x35 && modifiers.isEmpty {
+            stopRecording()
+            return
+        }
+        onRecord(KeyShortcut(keyCode: keyCode, modifierFlags: modifiers))
+        stopRecording()
     }
 }
 
