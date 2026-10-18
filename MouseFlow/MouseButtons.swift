@@ -68,6 +68,7 @@ enum ButtonAction: String, CaseIterable {
     case openURL = "Open URL"
     case runShortcut = "Run Shortcut"
     case customShortcut = "Custom Shortcut"
+    case macro = "Macro"
     case previousDesktop = "Previous Desktop"
     case nextDesktop = "Next Desktop"
     case missionControl = "Mission Control"
@@ -92,7 +93,7 @@ enum ButtonAction: String, CaseIterable {
     /// Actions grouped for the pickers (a divider is shown between groups).
     static let groups: [[ButtonAction]] = [
         [.none],
-        [.launchApp, .openURL, .runShortcut, .customShortcut],
+        [.launchApp, .openURL, .runShortcut, .customShortcut, .macro],
         [.previousDesktop, .nextDesktop, .missionControl, .appExpose, .showDesktop, .launchpad],
         [.back, .forward, .copy, .paste, .escape],
         [.playPause, .nextTrack, .previousTrack, .volumeUp, .volumeDown, .mute],
@@ -108,6 +109,7 @@ struct ButtonBinding: Equatable {
     var openURL: String?
     var shortcutName: String?
     var customShortcut: KeyShortcut?
+    var macro: [MacroStep]?
 
     static func load(for button: MouseButton, from defaults: UserDefaults) -> ButtonBinding {
         let raw = button.rawNumber
@@ -116,6 +118,7 @@ struct ButtonBinding: Equatable {
         )
         binding.launchApp = defaults.data(forKey: "launchApp_\(raw)").flatMap { try? JSONDecoder().decode(LaunchAppTarget.self, from: $0) }
         binding.customShortcut = defaults.data(forKey: "customShortcut_\(raw)").flatMap { try? JSONDecoder().decode(KeyShortcut.self, from: $0) }
+        binding.macro = defaults.data(forKey: "macro_\(raw)").flatMap { try? JSONDecoder().decode([MacroStep].self, from: $0) }
         binding.openURL = defaults.string(forKey: "openURL_\(raw)")
         binding.shortcutName = defaults.string(forKey: "runShortcut_\(raw)")
         return binding
@@ -126,6 +129,7 @@ struct ButtonBinding: Equatable {
         defaults.set(action.rawValue, forKey: button.actionDefaultsKey)
         defaults.set(launchApp.flatMap { try? JSONEncoder().encode($0) }, forKey: "launchApp_\(raw)")
         defaults.set(customShortcut.flatMap { try? JSONEncoder().encode($0) }, forKey: "customShortcut_\(raw)")
+        defaults.set(macro.flatMap { try? JSONEncoder().encode($0) }, forKey: "macro_\(raw)")
         defaults.set(openURL, forKey: "openURL_\(raw)")
         defaults.set(shortcutName, forKey: "runShortcut_\(raw)")
     }

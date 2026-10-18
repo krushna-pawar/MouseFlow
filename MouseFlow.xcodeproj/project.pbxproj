@@ -14,6 +14,8 @@
 		B11D00051234567890ABCDEF /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00051234567890ABCDEF /* PermissionManager.swift */; };
 		B11D00211234567890ABCDEF /* SystemActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00211234567890ABCDEF /* SystemActions.swift */; };
 		B11D004C1234567890ABCDEF /* ButtonTargetPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */; };
+		B11D00F71234567890ABCDEF /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00F71234567890ABCDEF /* Macros.swift */; };
+		B11D00F81234567890ABCDEF /* MacroEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00F81234567890ABCDEF /* MacroEditor.swift */; };
 		B11D004B1234567890ABCDEF /* PointerSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004B1234567890ABCDEF /* PointerSpeed.swift */; };
 		B11D004A1234567890ABCDEF /* GlobalEventTap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004A1234567890ABCDEF /* GlobalEventTap.swift */; };
 		B11D00491234567890ABCDEF /* ButtonActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00491234567890ABCDEF /* ButtonActions.swift */; };
@@ -43,6 +45,8 @@
 		F11E00051234567890ABCDEF /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		F11E00211234567890ABCDEF /* SystemActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemActions.swift; sourceTree = "<group>"; };
 		F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTargetPrompts.swift; sourceTree = "<group>"; };
+		F11E00F71234567890ABCDEF /* Macros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
+		F11E00F81234567890ABCDEF /* MacroEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroEditor.swift; sourceTree = "<group>"; };
 		F11E004B1234567890ABCDEF /* PointerSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerSpeed.swift; sourceTree = "<group>"; };
 		F11E004A1234567890ABCDEF /* GlobalEventTap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalEventTap.swift; sourceTree = "<group>"; };
 		F11E00491234567890ABCDEF /* ButtonActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonActions.swift; sourceTree = "<group>"; };
@@ -91,6 +95,8 @@
 				F11E00051234567890ABCDEF /* PermissionManager.swift */,
 				F11E00211234567890ABCDEF /* SystemActions.swift */,
 				F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */,
+				F11E00F71234567890ABCDEF /* Macros.swift */,
+				F11E00F81234567890ABCDEF /* MacroEditor.swift */,
 				F11E004B1234567890ABCDEF /* PointerSpeed.swift */,
 				F11E004A1234567890ABCDEF /* GlobalEventTap.swift */,
 				F11E00491234567890ABCDEF /* ButtonActions.swift */,
@@ -197,6 +203,8 @@
 				B11D00051234567890ABCDEF /* PermissionManager.swift in Sources */,
 				B11D00211234567890ABCDEF /* SystemActions.swift in Sources */,
 				B11D004C1234567890ABCDEF /* ButtonTargetPrompts.swift in Sources */,
+				B11D00F71234567890ABCDEF /* Macros.swift in Sources */,
+				B11D00F81234567890ABCDEF /* MacroEditor.swift in Sources */,
 				B11D004B1234567890ABCDEF /* PointerSpeed.swift in Sources */,
 				B11D004A1234567890ABCDEF /* GlobalEventTap.swift in Sources */,
 				B11D00491234567890ABCDEF /* ButtonActions.swift in Sources */,

@@ -43,6 +43,8 @@ struct SettingsView: View {
     @ObservedObject private var navigation = SettingsNavigation.shared
     @State private var hasAccessibility = AccessibilityPermission.isGranted
     @State private var isConfirmingResetAll = false
+    /// The button whose macro is open in the editor sheet.
+    @State private var macroButton: MouseButton?
 
     var body: some View {
         NavigationSplitView {
@@ -98,6 +100,11 @@ struct SettingsView: View {
         }
         .onReceive(AccessibilityPermission.changes) { granted in
             hasAccessibility = granted
+        }
+        .sheet(item: $macroButton) { button in
+            MacroEditor(buttonLabel: button.label, steps: appState[button].macro ?? []) { steps in
+                appState[button].macro = steps
+            }
         }
     }
 
@@ -352,6 +359,10 @@ struct SettingsView: View {
             textTargetRow(value: binding.shortcutName, emptyText: "No shortcut set", buttonTitle: "Set Shortcut…") {
                 editShortcutName(for: button)
             }
+        case .macro:
+            textTargetRow(value: binding.macro.flatMap { $0.isEmpty ? nil : Macro.stepCount($0) }, emptyText: "No macro recorded", buttonTitle: "Edit Macro…") {
+                macroButton = button
+            }
         default:
             EmptyView()
         }
@@ -365,6 +376,7 @@ struct SettingsView: View {
         case .launchApp: chooseApp(for: button)
         case .openURL: editURL(for: button)
         case .runShortcut: editShortcutName(for: button)
+        case .macro: macroButton = button
         default: break
         }
     }

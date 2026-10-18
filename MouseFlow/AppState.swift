@@ -138,6 +138,9 @@ final class AppState: ObservableObject {
             return binding.shortcutName.map { "Run Shortcut (\($0))" } ?? "Run Shortcut (Set Name…)"
         case .launchApp:
             return binding.launchApp.map { "Launch App (\($0.name))" } ?? "Launch App (Choose…)"
+        case .macro:
+            guard let steps = binding.macro, !steps.isEmpty else { return "Macro (Record…)" }
+            return "Macro (\(Macro.stepCount(steps)))"
         default:
             return action.rawValue
         }

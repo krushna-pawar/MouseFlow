@@ -106,6 +106,8 @@ final class ButtonActionExecutor {
                     debugLog("Executing custom shortcut %@", shortcut.displayString)
                     simulateKeyShortcut(keyCode: shortcut.keyCode, modifierFlags: shortcut.modifierFlags)
                 }
+            case .macro:
+                if let steps = binding.macro { MacroPlayer.shared.play(steps) }
             case .openURL:
                 if let url = binding.openURL { SystemActions.openURL(url) }
             case .runShortcut:
