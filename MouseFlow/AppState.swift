@@ -252,9 +252,20 @@ final class AppState: ObservableObject {
         debugLog("resetAllToDefaults called")
     }
 
+    /// Stops the tap when Accessibility access is turned off and starts it again when it's turned back on.
+    private var accessibilitySync: AnyCancellable?
+
     /// Called once from AppDelegate after launch. Starts the event tap if enabled.
     func startEventTapIfNeeded() {
         debugLog("startEventTapIfNeeded called, AccessibilityPermission.isGranted = %d", AccessibilityPermission.isGranted ? 1 : 0)
+        accessibilitySync = AccessibilityPermission.changes.sink { [weak self] granted in
+            NSLog("[MouseFlow] Accessibility permission %@", granted ? "granted" : "revoked")
+            if granted {
+                self?.syncEventTap()
+            } else {
+                GlobalEventTap.shared.stop()
+            }
+        }
         if AccessibilityPermission.isGranted {
             syncEventTap()
         } else {

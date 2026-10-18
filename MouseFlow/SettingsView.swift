@@ -96,6 +96,9 @@ struct SettingsView: View {
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             hasAccessibility = AccessibilityPermission.isGranted
         }
+        .onReceive(AccessibilityPermission.changes) { granted in
+            hasAccessibility = granted
+        }
     }
 
     // MARK: - General Section

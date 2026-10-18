@@ -1,6 +1,7 @@
 import Foundation
 import ApplicationServices
 import AppKit
+import Combine
 
 /// Unified Accessibility permission manager for MouseFlow.
 enum AccessibilityPermission {
@@ -9,6 +10,15 @@ enum AccessibilityPermission {
             kAXTrustedCheckOptionPrompt.takeUnretainedValue(): false
         ] as CFDictionary)
     }
+
+    /// Emits the current trust state whenever Accessibility access is turned on or off in System Settings.
+    /// macOS posts the notification before the new state is readable, so each check waits a moment.
+    static let changes: AnyPublisher<Bool, Never> = DistributedNotificationCenter.default()
+        .publisher(for: Notification.Name("com.apple.accessibility.api"))
+        .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+        .map { _ in isGranted }
+        .share()
+        .eraseToAnyPublisher()
 
     static func prompt() {
         AXIsProcessTrustedWithOptions([
