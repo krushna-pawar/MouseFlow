@@ -272,7 +272,7 @@ final class AppState: ObservableObject {
             syncEventTap()
         } else {
             debugLog("Requesting accessibility prompt and polling...")
-            AccessibilityPermission.explainAndPrompt()
+            AccessibilityPermission.requestAccess()
             AccessibilityPermission.pollUntilGranted { [weak self] in
                 NSLog("[MouseFlow] Accessibility permission granted! Syncing event tap...")
                 self?.syncEventTap()

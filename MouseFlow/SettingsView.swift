@@ -160,7 +160,7 @@ struct SettingsView: View {
                             .font(.system(size: 16))
                     } else {
                         Button("Open Settings") {
-                            AccessibilityPermission.openSettings()
+                            AccessibilityPermission.requestAccess()
                         }
                         .controlSize(.small)
                     }
