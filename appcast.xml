@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+    <channel>
+        <title>MouseFlow</title>
+        <link>https://github.com/krushna-pawar/MouseFlow</link>
+        <item>
+            <title>MouseFlow 1.0</title>
+            <pubDate>Mon, 09 Nov 2026 19:38:02 +0000</pubDate>
+            <sparkle:version>1</sparkle:version>
+            <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/krushna-pawar/MouseFlow/releases/download/v1.0/MouseFlow-1.0.dmg" sparkle:edSignature="9t1uEQPRIhdYCso8siZ2kJk4LDqpS/JTIybbESNlLwlxn/r3HwIxaU91m9scOBITGIcw9miEtLbCcwNxL0ORCw==" length="3037245" type="application/octet-stream"/>
+        </item>
+    </channel>
+</rss>

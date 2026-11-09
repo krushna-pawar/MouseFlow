@@ -45,9 +45,11 @@ Record a series of key presses, add text and pauses, and play it all back with o
 1. Download `MouseFlow-<version>.dmg` from the [latest release](../../releases/latest).
 2. Open it and drag **MouseFlow** into **Applications**.
 3. Open MouseFlow. The first time, macOS blocks it because it isn't from the App Store. Go to **System Settings › Privacy & Security**, scroll down and click **Open Anyway**. You only do this once.
-4. When asked, turn on MouseFlow under **System Settings › Privacy & Security › Accessibility**. It starts working right away.
+4. MouseFlow opens **System Settings › Privacy & Security › Accessibility** for you. Turn on its switch, and it starts working right away.
 
 MouseFlow lives in the menu bar. Click its icon for quick controls, or choose **Settings** for everything else.
+
+MouseFlow updates itself. It checks once a day, and you can choose **Check for Updates…** from its menu-bar icon any time.
 
 ## Something wrong?
 
