@@ -2,8 +2,10 @@ import Foundation
 
 /// A mouse button as Settings names it (by physical label), with the raw CGEvent button number
 /// the event tap sees. This is the only place the physical-to-raw mapping lives.
-enum MouseButton: CaseIterable, Hashable {
+enum MouseButton: CaseIterable, Hashable, Identifiable {
     case left, right, middle, mb3, mb4, mb5, mb6, mb7
+
+    var id: Self { self }
 
     /// Raw CGEvent button number. Physical MB3 reports as raw 4 and MB4 as raw 3.
     var rawNumber: Int64 {
@@ -109,7 +111,7 @@ struct ButtonBinding: Equatable {
     var openURL: String?
     var shortcutName: String?
     var customShortcut: KeyShortcut?
-    var macro: [MacroStep]?
+    var macro: [MacroStep] = []
 
     static func load(for button: MouseButton, from defaults: UserDefaults) -> ButtonBinding {
         let raw = button.rawNumber
@@ -118,7 +120,7 @@ struct ButtonBinding: Equatable {
         )
         binding.launchApp = defaults.data(forKey: "launchApp_\(raw)").flatMap { try? JSONDecoder().decode(LaunchAppTarget.self, from: $0) }
         binding.customShortcut = defaults.data(forKey: "customShortcut_\(raw)").flatMap { try? JSONDecoder().decode(KeyShortcut.self, from: $0) }
-        binding.macro = defaults.data(forKey: "macro_\(raw)").flatMap { try? JSONDecoder().decode([MacroStep].self, from: $0) }
+        binding.macro = defaults.data(forKey: "macro_\(raw)").flatMap { try? JSONDecoder().decode([MacroStep].self, from: $0) } ?? []
         binding.openURL = defaults.string(forKey: "openURL_\(raw)")
         binding.shortcutName = defaults.string(forKey: "runShortcut_\(raw)")
         return binding
@@ -129,7 +131,7 @@ struct ButtonBinding: Equatable {
         defaults.set(action.rawValue, forKey: button.actionDefaultsKey)
         defaults.set(launchApp.flatMap { try? JSONEncoder().encode($0) }, forKey: "launchApp_\(raw)")
         defaults.set(customShortcut.flatMap { try? JSONEncoder().encode($0) }, forKey: "customShortcut_\(raw)")
-        defaults.set(macro.flatMap { try? JSONEncoder().encode($0) }, forKey: "macro_\(raw)")
+        defaults.set(macro.isEmpty ? nil : try? JSONEncoder().encode(macro), forKey: "macro_\(raw)")
         defaults.set(openURL, forKey: "openURL_\(raw)")
         defaults.set(shortcutName, forKey: "runShortcut_\(raw)")
     }

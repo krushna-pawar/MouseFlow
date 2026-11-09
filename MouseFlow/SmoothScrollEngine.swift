@@ -1,5 +1,3 @@
-// SmoothScrollEngine.swift
-
 import CoreGraphics
 import CoreVideo
 import Foundation

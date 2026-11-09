@@ -1,5 +1,3 @@
-// ScrollWheelEventView.swift
-
 import CoreGraphics
 import Foundation
 import simd

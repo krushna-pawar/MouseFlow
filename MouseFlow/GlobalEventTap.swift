@@ -1,5 +1,3 @@
-// GlobalEventTap.swift
-
 import CoreGraphics
 import Foundation
 

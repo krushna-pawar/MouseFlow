@@ -1,4 +1,3 @@
-// PrivateSPI.swift
 // Private macOS SPI used by MouseFlow, declared via @_silgen_name.
 
 import CoreGraphics

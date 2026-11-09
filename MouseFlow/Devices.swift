@@ -1,5 +1,3 @@
-// Devices.swift
-
 import CoreGraphics
 import Foundation
 

@@ -139,8 +139,7 @@ final class AppState: ObservableObject {
         case .launchApp:
             return binding.launchApp.map { "Launch App (\($0.name))" } ?? "Launch App (Choose…)"
         case .macro:
-            guard let steps = binding.macro, !steps.isEmpty else { return "Macro (Record…)" }
-            return "Macro (\(Macro.stepCount(steps)))"
+            return binding.macro.isEmpty ? "Macro (Record…)" : "Macro (\(Macro.stepCount(binding.macro)))"
         default:
             return action.rawValue
         }

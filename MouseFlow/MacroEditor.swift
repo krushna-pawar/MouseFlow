@@ -1,10 +1,5 @@
 import SwiftUI
 
-/// Lets Settings present the macro editor with `.sheet(item:)`.
-extension MouseButton: Identifiable {
-    var id: Self { self }
-}
-
 /// Sheet for a button's macro: record key presses, add text and pauses, reorder and delete steps.
 /// Changes apply only on Save.
 struct MacroEditor: View {

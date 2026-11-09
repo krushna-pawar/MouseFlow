@@ -1,4 +1,3 @@
-// ScrollPipeline.swift
 // The scroll path for wheel events from a mouse.
 
 import CoreGraphics

@@ -1,5 +1,3 @@
-// ButtonActions.swift
-
 import AppKit
 
 // MARK: - Navigation Gesture & Click Simulation
@@ -107,7 +105,7 @@ final class ButtonActionExecutor {
                     simulateKeyShortcut(keyCode: shortcut.keyCode, modifierFlags: shortcut.modifierFlags)
                 }
             case .macro:
-                if let steps = binding.macro { MacroPlayer.shared.play(steps) }
+                MacroPlayer.shared.play(binding.macro)
             case .openURL:
                 if let url = binding.openURL { SystemActions.openURL(url) }
             case .runShortcut:

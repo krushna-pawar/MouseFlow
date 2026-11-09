@@ -1,5 +1,4 @@
-// KeySynthesis.swift
-// Synthesized key presses: custom shortcuts, symbolic hot keys (desktop switching), key names.
+// Synthesized key presses: custom shortcuts, symbolic hot keys (desktop switching), key names, and key capture for recorders.
 
 import Carbon
 import CoreGraphics
@@ -131,7 +130,9 @@ struct KeyShortcut: Codable, Equatable {
         CGEventFlags(rawValue: modifierFlagsRaw)
     }
 
+    /// Keeps only ⌘⌥⌃⇧ from `modifierFlags`.
     init(keyCode: CGKeyCode, modifierFlags: CGEventFlags) {
+        let modifierFlags = modifierFlags.intersection([.maskCommand, .maskShift, .maskAlternate, .maskControl])
         self.keyCode = keyCode
         self.modifierFlagsRaw = modifierFlags.rawValue
         self.displayString = Self.displayString(keyCode: keyCode, modifierFlags: modifierFlags)
@@ -262,6 +263,25 @@ struct KeyShortcut: Codable, Equatable {
             }
             return "Key(\(keyCode))"
         }
+    }
+}
+
+// MARK: - Key Capture
+
+/// Swallows key presses system-wide and reports each one on the main queue, with the uptime it arrived at in nanoseconds.
+/// Modifier changes pass through, so ⌘⌥⌃⇧ arrive with the key they're held for. Key repeats are swallowed and not reported.
+/// MouseFlow's own synthetic key presses pass through untouched. Returns nil when the event tap can't be created.
+func captureKeyPresses(_ onKey: @escaping @MainActor (KeyShortcut, UInt64) -> Void) -> ObservationToken? {
+    try? EventTap.observe([.keyDown]) { _, event in
+        guard !event.isMouseFlowSyntheticEvent else { return event }
+        guard event.getIntegerValueField(.keyboardEventAutorepeat) == 0 else { return nil }
+        let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
+        let flags = event.flags
+        let time = DispatchTime.now().uptimeNanoseconds
+        DispatchQueue.main.async {
+            onKey(KeyShortcut(keyCode: keyCode, modifierFlags: flags), time)
+        }
+        return nil
     }
 }
 

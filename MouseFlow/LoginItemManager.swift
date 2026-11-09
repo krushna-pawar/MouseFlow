@@ -1,4 +1,3 @@
-// LoginItemManager.swift
 // Manages login item registration using SMAppService (macOS 13+).
 
 import Foundation

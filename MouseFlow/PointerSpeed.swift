@@ -1,5 +1,3 @@
-// PointerSpeed.swift
-
 import AppKit
 import Foundation
 import IOKit

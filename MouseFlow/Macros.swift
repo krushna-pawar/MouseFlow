@@ -1,4 +1,3 @@
-// Macros.swift
 // Button macros: a list of key presses, typed text and pauses, recorded in Settings and played back in order.
 
 import CoreGraphics
@@ -97,16 +96,8 @@ final class MacroRecorder: ObservableObject {
         self.onStep = onStep
         lastKeyTime = nil
 
-        // Modifier changes pass through, so ⌘⌥⌃⇧ arrive with the key they're held for.
-        observationToken = try? EventTap.observe([.keyDown]) { [weak self] _, event in
-            guard event.getIntegerValueField(.keyboardEventAutorepeat) == 0 else { return nil }
-            let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
-            let modifiers = event.flags.intersection([.maskCommand, .maskShift, .maskAlternate, .maskControl])
-            let time = DispatchTime.now().uptimeNanoseconds
-            DispatchQueue.main.async {
-                self?.record(.key(KeyShortcut(keyCode: keyCode, modifierFlags: modifiers)), at: time)
-            }
-            return nil
+        observationToken = captureKeyPresses { [weak self] shortcut, time in
+            self?.record(.key(shortcut), at: time)
         }
         isRecording = observationToken != nil
         if !isRecording {

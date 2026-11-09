@@ -1,5 +1,3 @@
-// SettingsView.swift
-
 import SwiftUI
 import AppKit
 import CoreGraphics
@@ -102,7 +100,7 @@ struct SettingsView: View {
             hasAccessibility = granted
         }
         .sheet(item: $macroButton) { button in
-            MacroEditor(buttonLabel: button.label, steps: appState[button].macro ?? []) { steps in
+            MacroEditor(buttonLabel: button.label, steps: appState[button].macro) { steps in
                 appState[button].macro = steps
             }
         }
@@ -360,7 +358,7 @@ struct SettingsView: View {
                 editShortcutName(for: button)
             }
         case .macro:
-            textTargetRow(value: binding.macro.flatMap { $0.isEmpty ? nil : Macro.stepCount($0) }, emptyText: "No macro recorded", buttonTitle: "Edit Macro…") {
+            textTargetRow(value: binding.macro.isEmpty ? nil : Macro.stepCount(binding.macro), emptyText: "No macro recorded", buttonTitle: "Edit Macro…") {
                 macroButton = button
             }
         default:
@@ -545,21 +543,16 @@ struct CustomShortcutRecorder: View {
     private func startRecording() {
         isRecording = true
 
-        observationToken = try? EventTap.observe([
-            .flagsChanged,
-            .keyDown
-        ]) { _, event in
-            eventReceived(event)
+        observationToken = captureKeyPresses { shortcut, _ in
+            handleKeyDown(shortcut)
         }
 
+        // Without an event tap, record keys typed into the Settings window instead.
+        // NSEvent and CGEvent use the same bits for ⌘⌥⌃⇧.
         if observationToken == nil {
             localMonitor = NSEvent.addLocalMonitorForEvents(matching: [.keyDown]) { nsEvent in
-                var flags = CGEventFlags()
-                if nsEvent.modifierFlags.contains(.command) { flags.insert(.maskCommand) }
-                if nsEvent.modifierFlags.contains(.shift) { flags.insert(.maskShift) }
-                if nsEvent.modifierFlags.contains(.option) { flags.insert(.maskAlternate) }
-                if nsEvent.modifierFlags.contains(.control) { flags.insert(.maskControl) }
-                handleKeyDown(keyCode: CGKeyCode(nsEvent.keyCode), flags: flags)
+                let flags = CGEventFlags(rawValue: UInt64(nsEvent.modifierFlags.rawValue))
+                handleKeyDown(KeyShortcut(keyCode: CGKeyCode(nsEvent.keyCode), modifierFlags: flags))
                 return nil
             }
         }
@@ -575,25 +568,13 @@ struct CustomShortcutRecorder: View {
         }
     }
 
-    /// Modifier changes pass through, so ⌘⌥⌃⇧ keep working in other apps while recording.
-    private func eventReceived(_ event: CGEvent) -> CGEvent? {
-        guard event.type == .keyDown else { return event }
-        let keyCode = CGKeyCode(event.getIntegerValueField(.keyboardEventKeycode))
-        let flags = event.flags
-        DispatchQueue.main.async {
-            self.handleKeyDown(keyCode: keyCode, flags: flags)
-        }
-        return nil
-    }
-
     /// Records the key with its modifiers, or cancels when Escape is pressed with none.
-    private func handleKeyDown(keyCode: CGKeyCode, flags: CGEventFlags) {
-        let modifiers = flags.intersection([.maskCommand, .maskShift, .maskAlternate, .maskControl])
-        if keyCode == 0x35 && modifiers.isEmpty {
-            stopRecording()
-            return
+    private func handleKeyDown(_ shortcut: KeyShortcut) {
+        // A press queued before the tap was cancelled must not replace the one already recorded.
+        guard isRecording else { return }
+        if shortcut.keyCode != 0x35 || !shortcut.modifierFlags.isEmpty {
+            onRecord(shortcut)
         }
-        onRecord(KeyShortcut(keyCode: keyCode, modifierFlags: modifiers))
         stopRecording()
     }
 }

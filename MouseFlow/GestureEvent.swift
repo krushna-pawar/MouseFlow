@@ -1,5 +1,3 @@
-// GestureEvent.swift
-
 import AppKit
 import CoreGraphics
 
