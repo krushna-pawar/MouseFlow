@@ -187,7 +187,7 @@ struct SettingsView: View {
                     appState.resetAllToDefaults()
                 }
             } message: {
-                Text("Custom shortcuts, apps, URLs, and Shortcuts assigned to mouse buttons will be removed.")
+                Text("Custom shortcuts, macros, apps, URLs, and Shortcuts assigned to mouse buttons will be removed.")
             }
         }
     }
