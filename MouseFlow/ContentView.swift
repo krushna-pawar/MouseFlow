@@ -62,6 +62,16 @@ struct ContentView: View {
                 .buttonStyle(PopoverRowButtonStyle())
                 .keyboardShortcut(",", modifiers: .command)
 
+                Button(action: { UpdateController.shared.checkForUpdates() }) {
+                    HStack {
+                        Text("Check for Updates…")
+                            .font(.system(size: 12))
+                            .foregroundColor(.primary.opacity(0.9))
+                        Spacer()
+                    }
+                }
+                .buttonStyle(PopoverRowButtonStyle())
+
                 Button(action: { NSApp.terminate(nil) }) {
                     HStack {
                         Text("Quit MouseFlow")

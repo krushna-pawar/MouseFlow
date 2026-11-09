@@ -14,6 +14,8 @@
 		B11D00051234567890ABCDEF /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00051234567890ABCDEF /* PermissionManager.swift */; };
 		B11D00211234567890ABCDEF /* SystemActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00211234567890ABCDEF /* SystemActions.swift */; };
 		B11D004C1234567890ABCDEF /* ButtonTargetPrompts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */; };
+		B11D01A41234567890ABCDEF /* Updates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E01A41234567890ABCDEF /* Updates.swift */; };
+		B11D01A31234567890ABCDEF /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = F11E01A21234567890ABCDEF /* Sparkle */; };
 		B11D00F71234567890ABCDEF /* Macros.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00F71234567890ABCDEF /* Macros.swift */; };
 		B11D00F81234567890ABCDEF /* MacroEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E00F81234567890ABCDEF /* MacroEditor.swift */; };
 		B11D004B1234567890ABCDEF /* PointerSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11E004B1234567890ABCDEF /* PointerSpeed.swift */; };
@@ -45,6 +47,7 @@
 		F11E00051234567890ABCDEF /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		F11E00211234567890ABCDEF /* SystemActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemActions.swift; sourceTree = "<group>"; };
 		F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTargetPrompts.swift; sourceTree = "<group>"; };
+		F11E01A41234567890ABCDEF /* Updates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updates.swift; sourceTree = "<group>"; };
 		F11E00F71234567890ABCDEF /* Macros.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Macros.swift; sourceTree = "<group>"; };
 		F11E00F81234567890ABCDEF /* MacroEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroEditor.swift; sourceTree = "<group>"; };
 		F11E004B1234567890ABCDEF /* PointerSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointerSpeed.swift; sourceTree = "<group>"; };
@@ -71,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B11D01A31234567890ABCDEF /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,6 +100,7 @@
 				F11E00211234567890ABCDEF /* SystemActions.swift */,
 				F11E004C1234567890ABCDEF /* ButtonTargetPrompts.swift */,
 				F11E00F71234567890ABCDEF /* Macros.swift */,
+				F11E01A41234567890ABCDEF /* Updates.swift */,
 				F11E00F81234567890ABCDEF /* MacroEditor.swift */,
 				F11E004B1234567890ABCDEF /* PointerSpeed.swift */,
 				F11E004A1234567890ABCDEF /* GlobalEventTap.swift */,
@@ -143,6 +148,9 @@
 			dependencies = (
 			);
 			name = MouseFlow;
+			packageProductDependencies = (
+				F11E01A21234567890ABCDEF /* Sparkle */,
+			);
 			productName = MouseFlow;
 			productReference = F11E00AA1234567890ABCDEF /* MouseFlow.app */;
 			productType = "com.apple.product-type.application";
@@ -171,6 +179,9 @@
 				Base,
 			);
 			mainGroup = F11E00E11234567890ABCDEF;
+			packageReferences = (
+				F11E01A11234567890ABCDEF /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
 			productRefGroup = F11E00E31234567890ABCDEF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -204,6 +215,7 @@
 				B11D00211234567890ABCDEF /* SystemActions.swift in Sources */,
 				B11D004C1234567890ABCDEF /* ButtonTargetPrompts.swift in Sources */,
 				B11D00F71234567890ABCDEF /* Macros.swift in Sources */,
+				B11D01A41234567890ABCDEF /* Updates.swift in Sources */,
 				B11D00F81234567890ABCDEF /* MacroEditor.swift in Sources */,
 				B11D004B1234567890ABCDEF /* PointerSpeed.swift in Sources */,
 				B11D004A1234567890ABCDEF /* GlobalEventTap.swift in Sources */,
@@ -360,6 +372,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F11E01A11234567890ABCDEF /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.10.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F11E01A21234567890ABCDEF /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F11E01A11234567890ABCDEF /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 	};
 	rootObject = F11E00D11234567890ABCDEF /* Project object */;

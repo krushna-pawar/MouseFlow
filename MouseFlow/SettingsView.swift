@@ -39,6 +39,7 @@ struct SettingsView: View {
     @ObservedObject var appState: AppState = AppState.shared
     @ObservedObject private var loginItemManager = LoginItemManager.shared
     @ObservedObject private var navigation = SettingsNavigation.shared
+    @ObservedObject private var updates = UpdateController.shared
     @State private var hasAccessibility = AccessibilityPermission.isGranted
     @State private var isConfirmingResetAll = false
     /// The button whose macro is open in the editor sheet.
@@ -170,6 +171,14 @@ struct SettingsView: View {
 
             Section {
                 LabeledContent("App Version", value: Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "Unknown")
+                Toggle("Check for Updates Automatically", isOn: Binding(
+                    get: { updates.checksAutomatically },
+                    set: { updates.checksAutomatically = $0 }
+                ))
+                LabeledContent("Updates") {
+                    Button("Check for Updates…") { updates.checkForUpdates() }
+                        .disabled(!updates.canCheckForUpdates)
+                }
             } header: {
                 Text("About")
             } footer: {

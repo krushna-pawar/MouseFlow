@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
 
         AppState.shared.startEventTapIfNeeded()
+        _ = UpdateController.shared
 
         if CommandLine.arguments.contains("--settings") {
             SettingsWindowController.shared.showWindow()
