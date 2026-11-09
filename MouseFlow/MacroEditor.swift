@@ -119,6 +119,7 @@ struct MacroEditor: View {
                     get: { text },
                     set: { item.wrappedValue.step = .text($0) }
                 ))
+                .disabled(recorder.isRecording)
             case let .delay(milliseconds):
                 Image(systemName: "timer")
                     .frame(width: 18)
@@ -128,6 +129,7 @@ struct MacroEditor: View {
                     set: { item.wrappedValue.step = .delay(milliseconds: min(max($0, 0), Macro.maxDelay)) }
                 ), format: .number)
                 .frame(width: 70)
+                .disabled(recorder.isRecording)
                 Text("ms")
                     .foregroundColor(.secondary)
             }

@@ -1,6 +1,6 @@
 # MouseFlow
 
-A macOS menu-bar utility (macOS 13+) for external mice: scroll direction, speed and smoothing, lines per tick, modifier-key scrolling (zoom, horizontal, fast), pointer sensitivity, and actions for each mouse button. Trackpads are left untouched.
+A macOS menu-bar utility (macOS 13+) for external mice: scroll direction, speed and smoothing, lines per tick, modifier-key scrolling (zoom, horizontal, fast), pointer sensitivity, and actions for each mouse button, including recorded keyboard macros. Trackpads are left untouched.
 
 ## Install
 

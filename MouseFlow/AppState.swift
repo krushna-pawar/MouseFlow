@@ -242,7 +242,7 @@ final class AppState: ObservableObject {
         preciseSensitivityKey = tap.preciseSensitivityKey
     }
 
-    /// Resets button mappings and clears their shortcuts, apps, URLs, and Shortcuts names.
+    /// Resets button mappings and clears their shortcuts, apps, URLs, Shortcuts names, and macros.
     func resetButtonsToDefaults() {
         buttons = Self.defaultButtons
     }
